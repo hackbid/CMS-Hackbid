@@ -5,8 +5,22 @@ import {
   ChevronRightIcon,
   EllipsisVerticalIcon,
   MagnifyingGlassIcon,
+  BanknotesIcon,
 } from "@heroicons/react/20/solid";
 import AdminSideBar from "./components/AdminSideBar.jsx";
+
+const transactions = [
+  {
+    id: 1,
+    name: "Payment to Molly Sanders",
+    href: "#",
+    amount: "$20,000",
+    currency: "USD",
+    status: "success",
+    date: "July 11, 2020",
+    datetime: "2020-07-11",
+  },
+];
 
 import {
   navigation,
@@ -331,7 +345,7 @@ export default function AdminDashboard() {
                 </button>
                 <button
                   type="button"
-                  className="order-0 inline-flex items-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 sm:order-1 sm:ml-3"
+                  className="order-0 inline-flex items-center rounded-md bg-hackbid-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-hackbid-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 sm:order-1 sm:ml-3"
                 >
                   Create
                 </button>
