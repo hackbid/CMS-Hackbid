@@ -5,7 +5,12 @@ module.exports = {
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                "hackbid-primary": "#071150",
+                "hackbid-secondary": "#05127c",
+            }
+        },
     },
     plugins: [
         require("@tailwindcss/forms"),
