@@ -12,7 +12,8 @@ const DropDownUser = () => {
   const email = localStorage.getItem("email");
   const handleLogout = async () => {
     const logoutConfirmation = await confirmationNotification(
-      "Are you sure want to logout?"
+      "Are you sure want to logout?",
+      "Yes, I want to logout"
     );
     if (logoutConfirmation.isConfirmed) {
       localStorage.clear();

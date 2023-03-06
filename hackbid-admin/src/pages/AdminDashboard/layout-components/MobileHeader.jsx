@@ -12,7 +12,7 @@ const MobileHeader = ({ sidebarOpen, setSidebarOpen }) => {
   const handleLogout = async () => {
     const confirmLogout = await confirmationNotification(
       "Logged out successfully",
-      "success"
+      "Logout"
     );
     if (confirmLogout.isConfirmed) {
       localStorage.clear();

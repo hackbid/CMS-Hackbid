@@ -2,17 +2,33 @@ import { classNames } from "../data/data.js";
 import { useState } from "react";
 import {
   Bars4Icon,
-  HomeIcon,
   UserIcon,
-} from "@heroicons/react/24/outline/index.js";
+  ArchiveBoxIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/solid/index.js";
 import { useNavigate } from "react-router-dom";
+import { ShoppingCartIcon } from "@heroicons/react/20/solid/index.js";
 
 const SideBarNavigation = () => {
   const navigate = useNavigate();
   const [navigation, setNavigation] = useState([
     { name: "Dashboard", href: "#", icon: Bars4Icon, current: false, id: 1 },
     { name: "User", href: "#", icon: UserIcon, current: false, id: 2 },
-    { name: "Item", href: "#", icon: UserIcon, current: false, id: 3 },
+    { name: "Item", href: "#", icon: ArchiveBoxIcon, current: false, id: 3 },
+    {
+      name: "Refund",
+      href: "#",
+      icon: ShoppingCartIcon,
+      current: false,
+      id: 4,
+    },
+    {
+      name: "Reported",
+      href: "#",
+      icon: ExclamationTriangleIcon,
+      current: false,
+      id: 5,
+    },
   ]);
 
   const handleClick = (item) => {

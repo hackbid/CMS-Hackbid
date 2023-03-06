@@ -1,33 +1,39 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { categoriesUrl } from "../../api/baseUrl.js";
+import PageHeader from "../../components/PageHeader.jsx";
 
 export default function ItemPage() {
   const { data, isLoading, error } = useQuery(["items"], () =>
     axios.get(categoriesUrl).then((res) => res.data)
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-5xl lg:px-8">
-          <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-            {data.map((product) => (
-              <a key={product.id} href={product.href} className="group">
-                <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
-                  <img
-                    src={product.imageUrl}
-                    className="h-full w-full object-cover object-center group-hover:opacity-75"
-                  />
-                </div>
-                <h3 className="mt-4 text-2xl text-gray-700 text-center uppercase">
-                  {product.name}
-                </h3>
-              </a>
-            ))}
+      <div className="px-4 sm:px-6 lg:px-8">
+        {/*<PageHeader description={"This is the item page"} title={"Item"} />*/}
+        <div className="bg-white">
+          <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-4xl lg:px-8">
+            <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+              {data.map((product) => (
+                <a key={product.id} href={product.href} className="group">
+                  <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                    <img
+                      src={product.imageUrl}
+                      className="h-full w-full object-cover object-center group-hover:opacity-75"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-2xl text-gray-700 text-center uppercase">
+                    {product.name}
+                  </h3>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
