@@ -1,4 +1,4 @@
-const HeaderLogin = () => {
+const Header = ({ title }) => {
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-md">
       <img
@@ -7,10 +7,10 @@ const HeaderLogin = () => {
         alt="HackBid Logo"
       />
       <h2 className="text-hackbid-primary mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-        Sign in to your account
+        {title}
       </h2>
     </div>
   );
 };
 
-export default HeaderLogin;
+export default Header;

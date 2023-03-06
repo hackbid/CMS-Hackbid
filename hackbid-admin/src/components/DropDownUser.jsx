@@ -1,9 +1,25 @@
-import { classNames } from "../data/data.js";
+import { classNames, navigation } from "../data/data.js";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router-dom";
+import confirmationNotification from "../util/confirmationNotification.js";
+import { triggerNotification } from "../util/successNotification.js";
 
 const DropDownUser = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const logoutConfirmation = await confirmationNotification(
+      "Are you sure want to logout?"
+    );
+    if (logoutConfirmation.isConfirmed) {
+      localStorage.clear();
+      navigate("login");
+      triggerNotification("Logout Success", "success");
+    } else {
+      triggerNotification("Logout Canceled", "info");
+    }
+  };
   return (
     <Menu as="div" className="relative inline-block px-3 text-left">
       <div>
@@ -119,6 +135,7 @@ const DropDownUser = () => {
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={handleLogout}
                 >
                   Logout
                 </a>
