@@ -8,16 +8,16 @@ import { triggerNotification } from "../util/successNotification.js";
 
 const DropDownUser = () => {
   const navigate = useNavigate();
+  const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
   const handleLogout = async () => {
     const logoutConfirmation = await confirmationNotification(
       "Are you sure want to logout?"
     );
     if (logoutConfirmation.isConfirmed) {
       localStorage.clear();
-      navigate("login");
+      navigate("/login");
       triggerNotification("Logout Success", "success");
-    } else {
-      triggerNotification("Logout Canceled", "info");
     }
   };
   return (
@@ -33,11 +33,9 @@ const DropDownUser = () => {
               />
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="truncate text-sm font-medium text-gray-900">
-                  Dwiki Okvian Pradana
+                  {username}
                 </span>
-                <span className="truncate text-sm text-gray-500">
-                  @dwikiokvianp
-                </span>
+                <span className="truncate text-sm text-gray-500">{email}</span>
               </span>
             </span>
             <ChevronUpDownIcon

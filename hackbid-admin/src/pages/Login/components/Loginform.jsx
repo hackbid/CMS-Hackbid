@@ -21,8 +21,10 @@ const LoginForm = () => {
       triggerNotification(message, "error");
     },
     onSuccess: (data, variables, context) => {
-      const { access_key } = data.data;
+      const { access_key, username, email } = data.data;
       localStorage.setItem("access_key", access_key);
+      localStorage.setItem("username", username);
+      localStorage.setItem("email", email);
       triggerNotification("Login Success", "success");
       navigate("/");
     },
