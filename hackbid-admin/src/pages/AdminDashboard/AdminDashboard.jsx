@@ -1,12 +1,4 @@
-import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Bars3CenterLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  ChevronRightIcon,
-  EllipsisVerticalIcon,
-  MagnifyingGlassIcon,
-  BanknotesIcon,
-} from "@heroicons/react/20/solid";
+import { useState } from "react";
 import AdminSideBar from "./components/AdminSideBar.jsx";
 
 const transactions = [
@@ -22,14 +14,7 @@ const transactions = [
   },
 ];
 
-import {
-  navigation,
-  classNames,
-  projects,
-  teams,
-  pinnedProjects,
-} from "../../data/data.js";
-import Home from "../Home/Home.jsx";
+import MainLayout from "../MainLayout/MainLayout.jsx";
 import SidebarMobile from "./SidebarMobile.jsx";
 import DropDownUser from "../../components/DropDownUser.jsx";
 import MobileHeader from "./layout-components/MobileHeader.jsx";
@@ -51,7 +36,7 @@ export default function AdminDashboard() {
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
-          <Home />
+          <MainLayout />
         </div>
       </div>
     </>

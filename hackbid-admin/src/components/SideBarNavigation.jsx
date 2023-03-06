@@ -1,4 +1,4 @@
-import { classNames, navigation } from "../data/data.js";
+import { classNames } from "../data/data.js";
 import { useState } from "react";
 import {
   Bars4Icon,
@@ -10,19 +10,32 @@ import { useNavigate } from "react-router-dom";
 const SideBarNavigation = () => {
   const navigate = useNavigate();
   const [navigation, setNavigation] = useState([
-    { name: "home", href: "#", icon: HomeIcon, current: false, id: 1 },
-    { name: "Auction", href: "#", icon: Bars4Icon, current: false, id: 2 },
-    { name: "users", href: "#", icon: UserIcon, current: false, id: 3 },
+    { name: "Dashboard", href: "#", icon: Bars4Icon, current: false, id: 1 },
+    { name: "User", href: "#", icon: UserIcon, current: false, id: 2 },
+    { name: "Item", href: "#", icon: UserIcon, current: false, id: 3 },
   ]);
+
+  const handleClick = (item) => {
+    const updatedNavigation = navigation.map((navItem) =>
+      navItem.id === item.id
+        ? { ...navItem, current: !navItem.current }
+        : { ...navItem, current: false }
+    );
+    setNavigation(updatedNavigation);
+    if (item.name !== "Dashboard") {
+      navigate(item.name);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <nav className="mt-6 px-3">
       <div className="space-y-1">
         {navigation.map((item) => (
           <a
-            key={item.name}
-            onClick={() => {
-              navigate(item.name);
-            }}
+            key={item.id}
+            onClick={() => handleClick(item)}
             className={classNames(
               item.current
                 ? "bg-gray-200 text-gray-900"

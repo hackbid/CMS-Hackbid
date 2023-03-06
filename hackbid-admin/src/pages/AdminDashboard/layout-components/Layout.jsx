@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="mt-8 hidden sm:block">
+    <div className="mt-8 block">
       <Outlet />
     </div>
   );

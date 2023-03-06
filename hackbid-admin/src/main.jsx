@@ -7,6 +7,8 @@ import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import User from "./pages/User/User.jsx";
+import Item from "./pages/Item/Item.jsx";
+import SummaryDashboard from "./pages/SummaryDashboard/SummaryDashboard.jsx";
 
 const queryClient = new QueryClient();
 
@@ -16,8 +18,16 @@ const route = createBrowserRouter([
     element: <AdminDashboard />,
     children: [
       {
-        path: "users",
+        path: "/",
+        element: <SummaryDashboard />,
+      },
+      {
+        path: "User",
         element: <User />,
+      },
+      {
+        path: "Item",
+        element: <Item />,
       },
     ],
   },
