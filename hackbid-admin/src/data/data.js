@@ -6,9 +6,9 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "Auction", href: "#", icon: Bars4Icon, current: false },
-  { name: "User", href: "#", icon: UserIcon, current: false },
+  { name: "Home", href: "#", icon: HomeIcon, current: true, id: 1 },
+  { name: "Auction", href: "#", icon: Bars4Icon, current: false, id: 2 },
+  { name: "User", href: "#", icon: UserIcon, current: false, id: 3 },
 ];
 export const teams = [
   { name: "Engineering", href: "#", bgColorClass: "bg-indigo-500" },

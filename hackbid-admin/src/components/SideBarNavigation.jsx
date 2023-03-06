@@ -1,13 +1,28 @@
 import { classNames, navigation } from "../data/data.js";
+import { useState } from "react";
+import {
+  Bars4Icon,
+  HomeIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline/index.js";
+import { useNavigate } from "react-router-dom";
 
 const SideBarNavigation = () => {
+  const navigate = useNavigate();
+  const [navigation, setNavigation] = useState([
+    { name: "home", href: "#", icon: HomeIcon, current: false, id: 1 },
+    { name: "Auction", href: "#", icon: Bars4Icon, current: false, id: 2 },
+    { name: "users", href: "#", icon: UserIcon, current: false, id: 3 },
+  ]);
   return (
     <nav className="mt-6 px-3">
       <div className="space-y-1">
         {navigation.map((item) => (
           <a
             key={item.name}
-            href={item.href}
+            onClick={() => {
+              navigate(item.name);
+            }}
             className={classNames(
               item.current
                 ? "bg-gray-200 text-gray-900"
