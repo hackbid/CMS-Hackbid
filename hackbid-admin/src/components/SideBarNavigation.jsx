@@ -6,8 +6,8 @@ import {
   ArchiveBoxIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/solid/index.js";
-import { useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid/index.js";
+import { useNavigate } from "react-router-dom";
 
 const SideBarNavigation = () => {
   const navigate = useNavigate();

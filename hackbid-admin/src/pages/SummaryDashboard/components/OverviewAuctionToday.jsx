@@ -1,24 +1,49 @@
 import CardTotal from "./CardTotal.jsx";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { categoriesUrl, reportsUrl, usersUrl } from "../../../api/baseUrl.js";
+import HackbidLoading from "../../../components/HackbidLoading.jsx";
 
 const OverviewAuctionToday = () => {
+  const { data, isLoading, isError } = useQuery(["dashboard"], async () => {
+    const { data: userList } = await axios.get(usersUrl);
+    const { data: categoryList } = await axios.get(categoriesUrl);
+    const { data: reportedList } = await axios.get(reportsUrl);
+
+    const data = [
+      {
+        id: 1,
+        name: "User",
+        count: userList.length,
+      },
+      {
+        id: 2,
+        name: "Category",
+        count: categoryList.length,
+      },
+      {
+        id: 3,
+        name: "Reported",
+        count: reportedList.length,
+      },
+    ];
+    return data;
+  });
+
+  if (isError) return <p>Error...</p>;
   return (
     <div className="w-full xl:max-w-6xl">
-      <div className="px-4 py-3">
-        <div className="pb-2">
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 ">
-            Hackbid Admin Dashboard
-          </h1>
-          <p className="text-slate-500 text-sm md:text-lg">
-            Today auction overview
-          </p>
+      {isLoading ? (
+        <HackbidLoading />
+      ) : (
+        <div className="px-4 py-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {data.map((card) => (
+              <CardTotal key={card.id} item={card.name} count={card.count} />
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <CardTotal />
-          <CardTotal />
-          <CardTotal />
-          <CardTotal />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

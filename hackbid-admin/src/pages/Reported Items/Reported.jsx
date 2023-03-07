@@ -16,7 +16,7 @@ const people = [
 
 export default function Reported() {
   const { data, isLoading, isError } = useQuery(["report"], async () => {
-    const { data } = await axios.get("http://localhost:4000/items/report");
+    const { data } = await axios.get(reportsUrl);
     return data;
   });
   const title = "Reported Items";
