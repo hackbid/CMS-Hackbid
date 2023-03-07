@@ -1,5 +1,8 @@
 import PageHeader from "../../components/PageHeader.jsx";
 import confirmationNotification from "../../util/confirmationNotification.js";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { reportsUrl } from "../../api/baseUrl.js";
 
 const people = [
   {
@@ -12,11 +15,19 @@ const people = [
 ];
 
 export default function Reported() {
+  const { data, isLoading, isError } = useQuery(["report"], async () => {
+    const { data } = await axios.get("http://localhost:4000/items/report");
+    return data;
+  });
   const title = "Reported Items";
   const description =
     "This is the reported items page, please read carefully before proceeding to the next step.";
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   const handleDeletePost = async (id) => {
-    console.log(id);
     const deletePostAction = await confirmationNotification(
       "Are you sure you want to delete this post?",
       "Delete Post"
@@ -29,7 +40,7 @@ export default function Reported() {
   };
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <PageHeader title={"Reported Items"} description={description} />
+      <PageHeader title={title} description={description} />
       <div className="mt-8 flow-root">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -41,25 +52,25 @@ export default function Reported() {
                       scope="col"
                       className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
-                      Name
+                      Username
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Title
+                      Item
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Email
+                      Reason
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Role
+                      Date
                     </th>
                     <th
                       scope="col"
@@ -70,25 +81,25 @@ export default function Reported() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {people.map((person) => (
-                    <tr key={person.email}>
+                  {data.map((d) => (
+                    <tr key={d.UserId}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                        {person.name}
+                        {d.username}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.title}
+                        {d.itemName}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.email}
+                        {d.reason}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.role}
+                        {d.date}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <button
                           type="button"
                           className="rounded-md bg-red-700 py-2 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                          onClick={() => handleDeletePost(person.id)}
+                          onClick={() => handleDeletePost(d.id)}
                         >
                           Delete Post
                         </button>

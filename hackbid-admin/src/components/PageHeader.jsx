@@ -1,7 +1,7 @@
 const PageHeader = ({ title, description }) => {
   return (
-    <div className="sm:flex sm:items-center">
-      <div className="sm:flex-auto">
+    <div className="sm:flex sm:items-center mt-2">
+      <div className="sm:flex-auto ">
         <h1 className="font-semibold leading-6 text-gray-900 text-3xl">
           {title}
         </h1>
