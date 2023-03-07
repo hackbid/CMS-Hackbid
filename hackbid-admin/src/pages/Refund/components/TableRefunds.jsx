@@ -1,21 +1,53 @@
 import confirmationNotification from "../../../util/confirmationNotification.js";
+import {
+  userAprovedWithdrawalsUrl,
+  userRejectWithdrawalsUrl,
+  userWithdrawalsUrl,
+} from "../../../api/baseUrl.js";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { triggerNotification } from "../../../util/successNotification.js";
 
-const people = [
-  {
-    id: 1,
-    name: "Gagang Garpu",
-    title: "Gagange elek mas e",
-    email: "mitrasurya@gmail.com",
-  },
-];
 const TableRefunds = () => {
+  const queryClient = useQueryClient();
+  const { data, isLoading, isError } = useQuery(["withdrawals"], async () => {
+    const { data } = await axios.get(userWithdrawalsUrl);
+    return data;
+  });
+
+  const mutation = useMutation(
+    async (id) => {
+      await axios.patch(`${userAprovedWithdrawalsUrl}/${id}`);
+    },
+    {
+      onSuccess: () => {
+        queryClient
+          .invalidateQueries(["withdrawals"])
+          .then((r) => triggerNotification("Refund Approved", "info"));
+      },
+    }
+  );
+
+  const rejectMutation = useMutation(
+    async (id) => {
+      await axios.patch(`${userRejectWithdrawalsUrl}/${id}`);
+    },
+    {
+      onSuccess: () => {
+        queryClient
+          .invalidateQueries(["withdrawals"])
+          .then((r) => triggerNotification("Refund Rejected", "info"));
+      },
+    }
+  );
+
   const handleApproveRefund = async (id) => {
     const refundAction = await confirmationNotification(
       "Are you sure you want to approve this refund?",
       "Approve Refund"
     );
     if (refundAction.isConfirmed) {
-      console.log("Approved");
+      mutation.mutate(id);
     } else if (refundAction.isDismissed) {
       console.log("Not Approved");
     }
@@ -27,11 +59,15 @@ const TableRefunds = () => {
       "Reject Refund"
     );
     if (refundAction.isConfirmed) {
-      console.log("Approved");
+      rejectMutation.mutate(id);
     } else if (refundAction.isDismissed) {
       console.log("Not Approved");
     }
   };
+
+  if (isLoading) {
+    return <div>is Loading</div>;
+  }
 
   return (
     <div className="mt-4 flow-root">
@@ -45,19 +81,19 @@ const TableRefunds = () => {
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                   >
-                    Name
+                    User
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Title
+                    Initial Balance
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Email
+                    Withdrawal Amount
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Edit</span>
@@ -65,16 +101,16 @@ const TableRefunds = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {people.map((person) => (
-                  <tr key={person.email}>
+                {data.map((person) => (
+                  <tr key={person.id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                      {person.name}
+                      {person.UserId}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.title}
+                      {person.initialBalance}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.email}
+                      {person.transaction}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 ">
                       <button
