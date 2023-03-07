@@ -3,15 +3,13 @@ import confirmationNotification from "../../../util/confirmationNotification.js"
 const people = [
   {
     id: 1,
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    name: "Gagang Garpu",
+    title: "Gagange elek mas e",
+    email: "mitrasurya@gmail.com",
   },
 ];
 const TableRefunds = () => {
   const handleApproveRefund = async (id) => {
-    console.log(id);
     const refundAction = await confirmationNotification(
       "Are you sure you want to approve this refund?",
       "Approve Refund"
@@ -22,6 +20,19 @@ const TableRefunds = () => {
       console.log("Not Approved");
     }
   };
+
+  const handleRejectRefund = async (id) => {
+    const refundAction = await confirmationNotification(
+      "Are you sure you want to reject this refund?",
+      "Reject Refund"
+    );
+    if (refundAction.isConfirmed) {
+      console.log("Approved");
+    } else if (refundAction.isDismissed) {
+      console.log("Not Approved");
+    }
+  };
+
   return (
     <div className="mt-4 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -48,12 +59,6 @@ const TableRefunds = () => {
                   >
                     Email
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Role
-                  </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Edit</span>
                   </th>
@@ -71,16 +76,20 @@ const TableRefunds = () => {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {person.email}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.role}
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 ">
                       <button
                         type="button"
-                        className="rounded-md bg-indigo-500 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                        className="rounded-md bg-hackbid-secondary py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mr-2"
                         onClick={() => handleApproveRefund(person.id)}
                       >
                         Approve
+                      </button>
+                      <button
+                        type="button"
+                        className="rounded-md bg-red-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-200"
+                        onClick={() => handleRejectRefund(person.id)}
+                      >
+                        Reject
                       </button>
                     </td>
                   </tr>
