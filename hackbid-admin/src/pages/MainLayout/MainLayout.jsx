@@ -9,7 +9,6 @@ const MainLayout = () => {
   }
   return (
     <main className="flex-1">
-      {/*<HeaderMain path={path} />*/}
       <Layout />
     </main>
   );

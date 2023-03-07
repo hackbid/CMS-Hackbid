@@ -1,7 +1,13 @@
 import CardTotal from "./CardTotal.jsx";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { categoriesUrl, reportsUrl, usersUrl } from "../../../api/baseUrl.js";
+import {
+  categoriesUrl,
+  getItemsUrl,
+  reportsUrl,
+  usersUrl,
+  userWithdrawalsUrl,
+} from "../../../api/baseUrl.js";
 import HackbidLoading from "../../../components/HackbidLoading.jsx";
 
 const OverviewAuctionToday = () => {
@@ -9,6 +15,8 @@ const OverviewAuctionToday = () => {
     const { data: userList } = await axios.get(usersUrl);
     const { data: categoryList } = await axios.get(categoriesUrl);
     const { data: reportedList } = await axios.get(reportsUrl);
+    const { data: itemlist } = await axios.get(getItemsUrl);
+    const { data: withdrawList } = await axios.get(userWithdrawalsUrl);
 
     const data = [
       {
@@ -25,6 +33,16 @@ const OverviewAuctionToday = () => {
         id: 3,
         name: "Reported",
         count: reportedList.length,
+      },
+      {
+        id: 4,
+        name: "Item",
+        count: itemlist.length,
+      },
+      {
+        id: 5,
+        name: "Withdraw",
+        count: withdrawList.length,
       },
     ];
     return data;

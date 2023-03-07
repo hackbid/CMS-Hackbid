@@ -1,3 +1,7 @@
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { deleteItemUrl } from "../../../api/baseUrl.js";
+
 const ReportedTable = ({ data, handleDeletePost }) => {
   return (
     <div className="mt-8 flow-root">
@@ -55,7 +59,7 @@ const ReportedTable = ({ data, handleDeletePost }) => {
                       <button
                         type="button"
                         className="rounded-md bg-red-700 py-2 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                        onClick={() => handleDeletePost(d.id)}
+                        onClick={() => handleDeletePost(d.itemId)}
                       >
                         Delete Post
                       </button>

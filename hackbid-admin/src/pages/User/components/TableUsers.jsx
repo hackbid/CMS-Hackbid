@@ -1,3 +1,5 @@
+import { converToRupiah } from "../../../util/converToRupiah.js";
+
 const TableUsers = ({ data }) => {
   return (
     <div className="mt-8 flow-root">
@@ -22,16 +24,13 @@ const TableUsers = ({ data }) => {
                   scope="col"
                   className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
-                  Status
+                  Phone Number
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
                   Balance
-                </th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                  <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
@@ -43,7 +42,11 @@ const TableUsers = ({ data }) => {
                       <div className="h-10 w-10 flex-shrink-0">
                         <img
                           className="h-10 w-10 rounded-full"
-                          src={person.imageProfile}
+                          src={
+                            person.imageProfile
+                              ? person.imageProfile
+                              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                          }
                           alt=""
                         />
                       </div>
@@ -60,21 +63,10 @@ const TableUsers = ({ data }) => {
                     <div className="text-gray-500">{person.department}</div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                      Active
-                    </span>
+                    {person.phone}
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {person.balance}
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <a
-                      href="#"
-                      className="text-indigo-600 hover:text-indigo-900"
-                    >
-                      Edit
-                      <span className="sr-only">, {person.username}</span>
-                    </a>
+                    {converToRupiah(person.balance)}
                   </td>
                 </tr>
               ))}

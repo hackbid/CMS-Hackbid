@@ -3,20 +3,25 @@ import {
   UserIcon,
   ArchiveBoxIcon,
   ExclamationTriangleIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/solid/index.js";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid/index.js";
 
 const CardTotal = ({ item, count }) => {
-  const mantap = () => {
+  const iconSwitcher = () => {
     switch (item) {
       case "User":
-        return <UserIcon className="h-10 w-10 text-slate-400" />;
+        return <UserIcon className="h-10 w-10 text-slate-600" />;
       case "Category":
-        return <ArchiveBoxIcon className="h-10 w-10 text-slate-400" />;
+        return <ArchiveBoxIcon className="h-10 w-10 text-slate-600" />;
       case "Reported":
-        return <ExclamationTriangleIcon className="h-10 w-10 text-slate-400" />;
+        return <ExclamationTriangleIcon className="h-10 w-10 text-slate-600" />;
+      case "Item":
+        return <ShoppingCartIcon className="h-10 w-10 text-slate-600" />;
+      case "Withdraw":
+        return <CurrencyDollarIcon className="h-10 w-10 text-slate-600" />;
       default:
-        return <ShoppingCartIcon className="h-10 w-10 text-red-400" />;
+        return <ExclamationTriangleIcon className="h-10 w-10 text-slate-600" />;
     }
   };
   const bgColorClass = () => {
@@ -26,6 +31,10 @@ const CardTotal = ({ item, count }) => {
       case "Category":
         return "bg-slate-200";
       case "Reported":
+        return "bg-slate-300";
+      case "Item":
+        return "bg-slate-300";
+      case "Withdraw":
         return "bg-slate-300";
       default:
         return "bg-red-400";
@@ -44,7 +53,7 @@ const CardTotal = ({ item, count }) => {
             <p className="text-slate-500">Total {item}</p>
           </main>
         </div>
-        {mantap()}
+        {iconSwitcher()}
       </div>
     </div>
   );
