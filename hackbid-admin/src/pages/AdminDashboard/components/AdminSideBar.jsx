@@ -11,7 +11,6 @@ const AdminSideBar = () => {
       <CompanyLogo />
       <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
         <DropDownUser />
-        <AdminSearch />
         <SideBarNavigation />
       </div>
     </div>

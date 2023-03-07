@@ -6,6 +6,7 @@ import { deleteItemUrl, reportsUrl } from "../../api/baseUrl.js";
 import HackbidLoading from "../../components/HackbidLoading.jsx";
 import ReportedTable from "./components/ReportedTable.jsx";
 import { triggerNotification } from "../../util/successNotification.js";
+import Modal from "./components/ModalImage.jsx";
 
 export default function Reported() {
   const queryClient = useQueryClient();
@@ -19,13 +20,12 @@ export default function Reported() {
 
   const useDeleteMutation = useMutation(
     async (id) => {
-      console.log(id);
       await axios.delete(`${deleteItemUrl}/${id}`);
     },
     {
       onSuccess: () => {
         queryClient
-          .invalidateQueries(["report"])
+          .invalidateQueries(["report", "items"])
           .then((r) => triggerNotification("Item Deleted", "info"));
       },
     }
@@ -35,6 +35,7 @@ export default function Reported() {
       "Are you sure you want to delete this post?",
       "Delete Post"
     );
+    console.log(id);
     if (deletePostAction.isConfirmed) {
       useDeleteMutation.mutate(id);
     } else if (deletePostAction.isDismissed) {
