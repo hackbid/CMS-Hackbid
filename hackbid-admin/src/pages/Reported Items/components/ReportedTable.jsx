@@ -7,9 +7,27 @@ import convertToWIB from "../../../util/convertDate.js";
 
 const ReportedTable = ({ data, handleDeletePost }) => {
   const [open, setOpen] = useState(false);
+  const [reportData, setReportData] = useState({
+    username: "",
+    itemName: "",
+    reason: "",
+    date: "",
+    item: {
+      name: "",
+      description: "",
+      startPrice: "",
+    },
+    image: [],
+  });
+
+  const handleOpenModal = async (id) => {
+    await setReportData(data[id]);
+    setOpen(!open);
+  };
+
   return (
     <>
-      <ModalImage setOpen={setOpen} open={open} />
+      <ModalImage setOpen={setOpen} open={open} reportData={reportData} />
       <div className="mt-8 flow-root">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -56,8 +74,8 @@ const ReportedTable = ({ data, handleDeletePost }) => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {data.map((d) => (
-                    <tr key={d.UserId}>
+                  {data.map((d, index) => (
+                    <tr key={d._id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                         {d.itemName}
                       </td>
@@ -74,7 +92,7 @@ const ReportedTable = ({ data, handleDeletePost }) => {
                         <button
                           type="button"
                           className="rounded-md bg-hackbid-primary py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-hackbid-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          onClick={() => setOpen(!open)}
+                          onClick={() => handleOpenModal(index)}
                         >
                           Show Image
                         </button>

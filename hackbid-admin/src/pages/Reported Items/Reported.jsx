@@ -1,32 +1,28 @@
 import PageHeader from "../../components/PageHeader.jsx";
 import confirmationNotification from "../../util/confirmationNotification.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { deleteItemUrl, reportsUrl } from "../../api/baseUrl.js";
 import HackbidLoading from "../../components/HackbidLoading.jsx";
 import ReportedTable from "./components/ReportedTable.jsx";
 import { triggerNotification } from "../../util/successNotification.js";
-import Modal from "./components/ModalImage.jsx";
+import { deleteReport, getReport } from "../../api/report.js";
 
 export default function Reported() {
   const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery(["report"], async () => {
-    const { data } = await axios.get(reportsUrl);
-    return data;
-  });
+
+  const { data, isLoading, isError } = useQuery(["report"], getReport);
   const title = "Reported Items";
   const description =
     "This is the reported items page, please read carefully before proceeding to the next step.";
 
   const useDeleteMutation = useMutation(
     async (id) => {
-      await axios.delete(`${deleteItemUrl}/${id}`);
+      await deleteReport(id);
     },
     {
-      onSuccess: () => {
-        queryClient
-          .invalidateQueries(["report", "items"])
-          .then((r) => triggerNotification("Item Deleted", "info"));
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["report"]);
+        await queryClient.invalidateQueries(["items"]);
+        triggerNotification("Post Deleted", "info");
       },
     }
   );
@@ -35,11 +31,10 @@ export default function Reported() {
       "Are you sure you want to delete this post?",
       "Delete Post"
     );
-    console.log(id);
     if (deletePostAction.isConfirmed) {
       useDeleteMutation.mutate(id);
     } else if (deletePostAction.isDismissed) {
-      console.log("Not Deleted");
+      triggerNotification("Delete is dismissed, please come back soon", "info");
     }
   };
   return (

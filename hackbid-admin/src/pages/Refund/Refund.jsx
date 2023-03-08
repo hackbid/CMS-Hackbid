@@ -1,8 +1,8 @@
 import PageHeader from "../../components/PageHeader.jsx";
 import TableRefunds from "./components/TableRefunds.jsx";
 
-export default function Refund() {
-  const title = "Refund";
+export default function Withdraw() {
+  const title = "Withdraw";
   const description =
     "this is the description page, please be careful and read it carefully before approving the refund";
   return (

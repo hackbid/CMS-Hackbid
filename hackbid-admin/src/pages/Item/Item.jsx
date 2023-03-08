@@ -1,26 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { getItemsUrl } from "../../api/baseUrl.js";
 import HackbidLoading from "../../components/HackbidLoading.jsx";
-import { converToRupiah } from "../../util/converToRupiah.js";
-import HeaderMain from "../AdminDashboard/layout-components/HeaderMain.jsx";
 import PageHeader from "../../components/PageHeader.jsx";
 import ItemList from "./components/itemList.jsx";
-
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-];
+import { getItems } from "../../api/item.js";
 
 export default function ItemPage() {
-  const { data, isLoading, error } = useQuery(["items"], async () => {
-    const { data } = await axios.get(getItemsUrl);
-    return data;
-  });
+  const { data, isLoading, error } = useQuery(["items"], getItems);
 
   if (error) return <div>Error: {error.message}</div>;
 

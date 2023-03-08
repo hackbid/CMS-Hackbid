@@ -9,17 +9,23 @@ import axios from "axios";
 import { triggerNotification } from "../../../util/successNotification.js";
 import { converToRupiah } from "../../../util/converToRupiah.js";
 import HackbidLoading from "../../../components/HackbidLoading.jsx";
+import {
+  approveWithdrawal,
+  getWithdrawals,
+  rejectWithdrawal,
+} from "../../../api/withdraw.js";
 
 const TableRefunds = () => {
   const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery(["withdrawals"], async () => {
-    const { data } = await axios.get(userWithdrawalsUrl);
-    return data;
-  });
+
+  const { data, isLoading, isError } = useQuery(
+    ["withdrawals"],
+    getWithdrawals
+  );
 
   const mutation = useMutation(
     async (id) => {
-      await axios.patch(`${userAprovedWithdrawalsUrl}/${id}`);
+      await approveWithdrawal(id);
     },
     {
       onSuccess: () => {
@@ -32,7 +38,7 @@ const TableRefunds = () => {
 
   const rejectMutation = useMutation(
     async (id) => {
-      await axios.patch(`${userRejectWithdrawalsUrl}/${id}`);
+      await rejectWithdrawal(id);
     },
     {
       onSuccess: () => {
@@ -51,7 +57,10 @@ const TableRefunds = () => {
     if (refundAction.isConfirmed) {
       mutation.mutate(id);
     } else if (refundAction.isDismissed) {
-      console.log("Not Approved");
+      triggerNotification(
+        "Approval is dismissed, please come back soon",
+        "info"
+      );
     }
   };
 
@@ -63,7 +72,10 @@ const TableRefunds = () => {
     if (refundAction.isConfirmed) {
       rejectMutation.mutate(id);
     } else if (refundAction.isDismissed) {
-      console.log("Not Approved");
+      triggerNotification(
+        "Rejection is dismissed, please come back soon",
+        "info"
+      );
     }
   };
 

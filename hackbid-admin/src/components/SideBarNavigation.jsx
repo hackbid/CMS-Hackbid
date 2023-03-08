@@ -16,7 +16,7 @@ const SideBarNavigation = () => {
     { name: "User", href: "#", icon: UserIcon, current: false, id: 2 },
     { name: "Item", href: "#", icon: ArchiveBoxIcon, current: false, id: 3 },
     {
-      name: "Refund",
+      name: "Withdraw",
       href: "#",
       icon: ShoppingCartIcon,
       current: false,
