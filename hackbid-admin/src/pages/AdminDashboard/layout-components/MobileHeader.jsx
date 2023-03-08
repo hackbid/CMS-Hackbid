@@ -9,6 +9,7 @@ import { triggerNotification } from "../../../util/successNotification.js";
 
 const MobileHeader = ({ sidebarOpen, setSidebarOpen }) => {
   const navigate = useNavigate();
+  const image = localStorage.getItem("image");
   const handleLogout = async () => {
     const confirmLogout = await confirmationNotification(
       "Logged out successfully",
@@ -60,11 +61,7 @@ const MobileHeader = ({ sidebarOpen, setSidebarOpen }) => {
             <div>
               <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
                 <span className="sr-only">Open user menu</span>
-                <img
-                  className="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
+                <img className="h-8 w-8 rounded-full" src={image} alt="" />
               </Menu.Button>
             </div>
             <Transition

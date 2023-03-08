@@ -19,8 +19,13 @@ const LoginForm = () => {
       const { message } = error.response.data;
       triggerNotification(message, "error");
     },
-    onSuccess: (data, variables, context) => {
-      const { access_key, username, email } = data.data;
+    onSuccess: async (data, variables, context) => {
+      const { access_key, username, email, id } = data.data;
+      const { data: UserData } = await axios.get(
+        `http://localhost:4000/users/findById/${id}`
+      );
+      const { imageProfile } = UserData;
+      localStorage.setItem("image", imageProfile);
       localStorage.setItem("access_key", access_key);
       localStorage.setItem("username", username);
       localStorage.setItem("email", email);

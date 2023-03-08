@@ -7,6 +7,8 @@ import confirmationNotification from "../util/confirmationNotification.js";
 import { triggerNotification } from "../util/successNotification.js";
 
 const DropDownUser = () => {
+  const image = localStorage.getItem("image");
+
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
@@ -29,8 +31,8 @@ const DropDownUser = () => {
             <span className="flex min-w-0 items-center justify-between space-x-3">
               <img
                 className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-                src="https://www.planetsport.com/image-library/square/500/d/david-beckham-england-profile.jpg"
-                alt=""
+                src={image}
+                alt={username}
               />
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="truncate text-sm font-medium text-gray-900">
