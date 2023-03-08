@@ -1,9 +1,52 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline/index.js";
-import { classNames, navigation, teams } from "../../data/data.js";
+import { classNames, teams } from "../../data/data.js";
+import {
+  ArchiveBoxIcon,
+  Bars4Icon,
+  ExclamationTriangleIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid/index.js";
+import { ShoppingCartIcon } from "@heroicons/react/20/solid/index.js";
+import { useNavigate } from "react-router-dom";
 
 const SidebarMobile = ({ sidebarOpen, setSidebarOpen }) => {
+  const navigate = useNavigate();
+  const [navigation, setNavigation] = useState([
+    { name: "Dashboard", href: "#", icon: Bars4Icon, current: false, id: 1 },
+    { name: "User", href: "#", icon: UserIcon, current: false, id: 2 },
+    { name: "Item", href: "#", icon: ArchiveBoxIcon, current: false, id: 3 },
+    {
+      name: "Withdraw",
+      href: "#",
+      icon: ShoppingCartIcon,
+      current: false,
+      id: 4,
+    },
+    {
+      name: "Reported",
+      href: "#",
+      icon: ExclamationTriangleIcon,
+      current: false,
+      id: 5,
+    },
+  ]);
+
+  const handleClick = (item) => {
+    const updatedNavigation = navigation.map((navItem) =>
+      navItem.id === item.id
+        ? { ...navItem, current: !navItem.current }
+        : { ...navItem, current: false }
+    );
+    setNavigation(updatedNavigation);
+    if (item.name !== "Dashboard") {
+      navigate(item.name);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -59,8 +102,8 @@ const SidebarMobile = ({ sidebarOpen, setSidebarOpen }) => {
               </Transition.Child>
               <div className="flex flex-shrink-0 items-center px-4">
                 <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
+                  className="h-20 w-auto"
+                  src="https://i.imgur.com/KpZjtls.png"
                   alt="Your Company"
                 />
               </div>
@@ -71,6 +114,7 @@ const SidebarMobile = ({ sidebarOpen, setSidebarOpen }) => {
                       <a
                         key={item.name}
                         href={item.href}
+                        onClick={() => handleClick(item)}
                         className={classNames(
                           item.current
                             ? "bg-gray-100 text-gray-900"
@@ -92,43 +136,11 @@ const SidebarMobile = ({ sidebarOpen, setSidebarOpen }) => {
                       </a>
                     ))}
                   </div>
-                  <div className="mt-8">
-                    <h3
-                      className="px-3 text-sm font-medium text-gray-500"
-                      id="mobile-teams-headline"
-                    >
-                      Teams
-                    </h3>
-                    <div
-                      className="mt-1 space-y-1"
-                      role="group"
-                      aria-labelledby="mobile-teams-headline"
-                    >
-                      {teams.map((team) => (
-                        <a
-                          key={team.name}
-                          href={team.href}
-                          className="group flex items-center rounded-md px-3 py-2 text-base font-medium leading-5 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                        >
-                          <span
-                            className={classNames(
-                              team.bgColorClass,
-                              "mr-4 h-2.5 w-2.5 rounded-full"
-                            )}
-                            aria-hidden="true"
-                          />
-                          <span className="truncate">{team.name}</span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
                 </nav>
               </div>
             </Dialog.Panel>
           </Transition.Child>
-          <div className="w-14 flex-shrink-0" aria-hidden="true">
-            {/* Dummy element to force sidebar to shrink to fit close icon */}
-          </div>
+          <div className="w-14 flex-shrink-0" aria-hidden="true"></div>
         </div>
       </Dialog>
     </Transition.Root>

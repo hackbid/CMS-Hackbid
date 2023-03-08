@@ -4,8 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { triggerNotification } from "../../../util/successNotification.js";
-
-const loginEndPoint = "http://localhost:4000/users/login";
+import { loginEndPoint } from "../../../api/baseUrl.js";
 
 const LoginForm = () => {
   const navigate = useNavigate();
